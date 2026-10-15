@@ -1,4 +1,17 @@
-export default function SearchBar({ value, onChange, disabled = false }) {
+const EMPLOYEE_SUGGESTIONS = [
+  "Rahul Sharma",
+  "Rahul Verma",
+  "Priya Singh",
+  "Amit Kumar",
+  "Neha Gupta",
+  "Rohan Mehta",
+];
+
+export default function SearchBar({
+  value,
+  onChange,
+  disabled = false,
+}) {
   return (
     <div className="w-full">
       <label
@@ -29,13 +42,40 @@ export default function SearchBar({ value, onChange, disabled = false }) {
           disabled={disabled}
           placeholder="Try a name or department..."
           autoComplete="off"
+          aria-describedby="search-help search-suggestions"
           className="w-full rounded-xl border border-slate-300 bg-white py-3 pl-10 pr-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 disabled:cursor-not-allowed disabled:bg-slate-100"
         />
       </div>
 
-      <p className="mt-2 text-xs text-slate-500">
+      <p
+        id="search-help"
+        className="mt-2 text-xs text-slate-500"
+      >
         Search by employee name or department.
       </p>
+
+      <div
+        id="search-suggestions"
+        className="mt-3"
+      >
+        <p className="mb-2 text-xs font-medium text-slate-600">
+          Try searching for:
+        </p>
+
+        <div className="flex flex-wrap gap-2">
+          {EMPLOYEE_SUGGESTIONS.map((name) => (
+            <button
+              key={name}
+              type="button"
+              disabled={disabled}
+              onClick={() => onChange(name)}
+              className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-600 transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {name}
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
